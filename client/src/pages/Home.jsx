@@ -1,55 +1,96 @@
-import ComboCard from "../components/ComboCard";
+import { useState } from "react";
 import { combos } from "../data/combos";
 
+import Container from "../components/ui/Container";
+import HeroSection from "../components/home/HeroSection";
+import CategorySection from "../components/home/CategorySection";
+import SmartComboSection from "../components/home/SmartComboSection";
+import CategoryCard from "../components/home/CategoryCard";
+
+
 const Home = () => {
-  return (
-    <div className="space-y-6">
+const [selectedCategory, setSelectedCategory] = useState("all");
+const filteredCombos =
+  selectedCategory === "all"
+    ? combos
+    : combos.filter(
+        (combo) => combo.category === selectedCategory
+      );
 
-      {/* HERO SECTION */}
-      <div className="bg-green-600 text-white p-6 rounded-xl">
-        <h1 className="text-2xl font-bold">
-          Welcome to Nestly
-        </h1>
+//   return (
+//     <div className="space-y-6">
 
-        <p className="text-sm mt-2 opacity-90">
-          Your Home. Your Essentials. Delivered Intelligently.
-        </p>
-      </div>
+//       {/* HERO SECTION */}
+//       <div className="bg-green-600 text-white p-6 rounded-xl">
+//         <h1 className="text-2xl font-bold">
+//           Welcome to Nestly
+//         </h1>
 
-      {/* SMART COMBOS SECTION */}
-      <div>
-        <h2 className="text-xl font-bold mb-3">
-          Smart Combos
-        </h2>
+//         <p className="text-sm mt-2 opacity-90">
+//           Your Home. Your Essentials. Delivered Intelligently.
+//         </p>
+//       </div>
 
-        <div className="grid gap-3">
-          {combos.map((combo) => (
-            <ComboCard key={combo.id} combo={combo} />
-          ))}
-        </div>
-      </div>
+//       {/* SMART COMBOS SECTION */}
+//       <div>
+       
+//          <SectionHeading title="Smart Combos" />
+//         <div className="grid gap-3">
+         
+//           {filteredCombos.map((combo) => (
+//   <ComboCard key={combo.id} combo={combo} />
+// ))}
+//         </div>
+//       </div>
 
-      {/* CATEGORY PREVIEW */}
-      <div>
-        <h2 className="text-xl font-bold mb-3">
-          Categories
-        </h2>
+//       {/* CATEGORY PREVIEW */}
+//       <div>
+     
+//         <SectionHeading title="Categories" />
 
-        <div className="flex gap-3 overflow-x-auto">
-          <div className="min-w-[100px] bg-gray-100 p-3 rounded-lg text-center">
-            Food
-          </div>
-          <div className="min-w-[100px] bg-gray-100 p-3 rounded-lg text-center">
-            Cleaning
-          </div>
-          <div className="min-w-[100px] bg-gray-100 p-3 rounded-lg text-center">
-            Essentials
-          </div>
-        </div>
-      </div>
+//         <div className="flex gap-3 overflow-x-auto">
+      
+//           <div className="flex gap-3 overflow-x-auto pb-2">
+//   <CategoryCard
+//     category={{
+//       name: "All",
+//       icon: "✨",
+//       slug: "all",
+//     }}
+//     isActive={selectedCategory === "all"}
+//     onClick={setSelectedCategory}
+//   />
 
+//   {categories.map((category) => (
+//     <CategoryCard
+//       key={category.id}
+//       category={category}
+//       isActive={selectedCategory === category.slug}
+//       onClick={setSelectedCategory}
+//     />
+//   ))}
+// </div>
+//         </div>
+//       </div>
+
+//     </div>
+//   );
+return (
+  <Container>
+    <div className="space-y-6 py-6">
+      <HeroSection />
+
+      <CategorySection
+        selectedCategory={selectedCategory}
+        setSelectedCategory={setSelectedCategory}
+      />
+
+      <SmartComboSection
+        filteredCombos={filteredCombos}
+      />
     </div>
-  );
+  </Container>
+);
 };
 
 export default Home;
